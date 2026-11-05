@@ -8,25 +8,23 @@
 #include <stdlib.h>
 
 typedef struct PairOfPoints {
-    int *left;
-    int *right;    
+    size_t ileft;
+    size_t iright;    
 } pair;
 
 pair twoSum(int *nums, size_t len, int target) 
 {
-    pair p = {nums, nums + len - 1};
+    pair p = {0, len ? len - 1 : 0};
 
-    int sum = 0;
-
-    while (p.left < p.right) {
-        sum = *(p.left) + *(p.right);
+    while (p.ileft < p.iright) {
+        int sum = nums[p.ileft] + nums[p.iright];
 
         if (sum == target)
             return p;
         else if (sum < target)
-            (p.left)++;
+            p.ileft++;
         else
-            (p.right)--;
+            p.iright--;
     }
 
     return p;
@@ -55,8 +53,8 @@ int main()
 
     pair p = twoSum(nums, len, target);
 
-    if (*(p.left) + *(p.right) == target)
-        printf("The answer: %d, %d", *(p.left), *(p.right));
+    if (p.ileft < p.iright)
+        printf("The answer: %zu, %zu", p.ileft, p.iright);
     else
         printf("Couldn't make this kinda sum\n");
     free(nums);
