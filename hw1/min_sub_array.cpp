@@ -1,9 +1,15 @@
+// Дан массив положительных целых чисел nums и
+// положительное целое число target. Верните
+// подмассив минимальной длины, сумма элементов
+// которого больше или равна target. Если такого
+// подмассива не существует, верните 0.
+
 #include <stdio.h>
 #include <stdlib.h>
 
 int min_sub_array(int *nums, int len, int target)
 {
-    int min_len = len;
+    int min_len = 0;
     int left = 0;
     int curr_sum = 0;
 
@@ -12,7 +18,7 @@ int min_sub_array(int *nums, int len, int target)
 
         while (curr_sum >= target) {
             int window_size = right - left + 1;
-            if (window_size < min_len) {
+            if (min_len == 0 || window_size < min_len) {
                 min_len = window_size;
             }
             curr_sum -= nums[left];
@@ -20,7 +26,7 @@ int min_sub_array(int *nums, int len, int target)
         }
     }
 
-    return min_len == len ? 0 : min_len; 
+    return min_len; 
 }
 
 int main()
